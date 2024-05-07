@@ -6,8 +6,23 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  packages/engine:
     dependencies:
+      twgl.js:
+        specifier: ^5.5.4
+        version: 5.5.4
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.4.5
+
+  packages/examples:
+    dependencies:
+      engine:
+        specifier: workspace:*
+        version: link:../engine
       twgl.js:
         specifier: ^5.5.4
         version: 5.5.4

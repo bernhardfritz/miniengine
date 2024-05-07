@@ -1,0 +1,16 @@
+{
+  "name": "engine",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "twgl.js": "^5.5.4"
+  }
+}
