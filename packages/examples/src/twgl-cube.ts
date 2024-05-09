@@ -3,7 +3,7 @@ import vs from './vs.glsl?raw';
 import fs from './fs.glsl?raw';
 const m4 = twgl.m4;
 
-export default function (gl: WebGLRenderingContext) {
+export default function (gl: WebGL2RenderingContext) {
   const arrays = {
     position: [
       1, 1, -1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, -1,
@@ -26,8 +26,8 @@ export default function (gl: WebGLRenderingContext) {
       14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23,
     ],
   };
-  const programInfo = twgl.createProgramInfo(gl, [vs, fs]);
-  const bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
+  const programInfo = twgl.createProgramInfo(gl, [vs, fs], ["position", "normal", "texcoord"]);
+  const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, twgl.createBufferInfoFromArrays(gl, arrays));
   const tex = twgl.createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
@@ -83,8 +83,8 @@ export default function (gl: WebGLRenderingContext) {
     });
 
     gl.useProgram(programInfo.program);
-    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+    twgl.setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
     twgl.setUniforms(programInfo, uniforms);
-    gl.drawElements(gl.TRIANGLES, bufferInfo.numElements, gl.UNSIGNED_SHORT, 0);
+    twgl.drawBufferInfo(gl, vertexArrayInfo);
   };
 }

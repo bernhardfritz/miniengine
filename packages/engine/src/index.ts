@@ -1,12 +1,12 @@
 export function render(
-  app: (gl: WebGLRenderingContext) => (time: number) => void,
+  app: (gl: WebGL2RenderingContext) => (time: number) => void,
   container: Element
 ) {
   const canvas = document.createElement('canvas');
   container.appendChild(canvas);
-  const gl = canvas.getContext('webgl');
+  const gl = canvas.getContext('webgl2');
   if (gl === null) {
-    throw new Error('Error creating WebGL context.');
+    throw new Error('Error creating WebGL2 context.');
   }
   const callback = app(gl);
   const frameRequestCallback: FrameRequestCallback = (time) => {
