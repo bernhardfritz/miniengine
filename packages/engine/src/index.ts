@@ -3,6 +3,7 @@ export function render(
   container: Element
 ) {
   const canvas = document.createElement('canvas');
+  container.innerHTML = '';
   container.appendChild(canvas);
   const gl = canvas.getContext('webgl2');
   if (gl === null) {
