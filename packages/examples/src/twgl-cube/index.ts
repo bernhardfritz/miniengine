@@ -4,6 +4,10 @@ import fs from './fs.glsl?raw';
 const m4 = twgl.m4;
 
 export default function (gl: WebGL2RenderingContext) {
+  twgl.setDefaults({ attribPrefix: '' });
+
+  const programInfo = twgl.createProgramInfo(gl, [vs, fs]);
+
   const arrays = {
     position: [
       1, 1, -1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, -1,
@@ -26,8 +30,8 @@ export default function (gl: WebGL2RenderingContext) {
       14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23,
     ],
   };
-  const programInfo = twgl.createProgramInfo(gl, [vs, fs], ["position", "normal", "texcoord"]);
-  const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, twgl.createBufferInfoFromArrays(gl, arrays));
+  const bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
+
   const tex = twgl.createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
@@ -36,6 +40,7 @@ export default function (gl: WebGL2RenderingContext) {
       255,
     ],
   });
+
   const uniforms = {
     u_lightWorldPos: [1, 8, -10],
     u_lightColor: [1, 0.8, 0.8, 1],
@@ -51,13 +56,13 @@ export default function (gl: WebGL2RenderingContext) {
   };
 
   return (time: number) => {
+    time *= 0.001;
     twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    time *= 0.001;
 
     const fov = (30 * Math.PI) / 180;
     const aspect =
@@ -75,16 +80,14 @@ export default function (gl: WebGL2RenderingContext) {
     const viewProjection = m4.multiply(projection, view);
     const world = m4.rotationY(time);
 
-    Object.assign(uniforms, {
-      u_viewInverse: camera,
-      u_world: world,
-      u_worldInverseTranspose: m4.transpose(m4.inverse(world)),
-      u_worldViewProjection: m4.multiply(viewProjection, world),
-    });
+    uniforms.u_viewInverse = camera;
+    uniforms.u_world = world;
+    uniforms.u_worldInverseTranspose = m4.transpose(m4.inverse(world));
+    uniforms.u_worldViewProjection = m4.multiply(viewProjection, world);
 
     gl.useProgram(programInfo.program);
-    twgl.setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
+    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
     twgl.setUniforms(programInfo, uniforms);
-    twgl.drawBufferInfo(gl, vertexArrayInfo);
+    gl.drawElements(gl.TRIANGLES, bufferInfo.numElements, gl.UNSIGNED_SHORT, 0);
   };
 }
