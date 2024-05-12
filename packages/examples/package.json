@@ -1,5 +1,5 @@
 {
-  "name": "examples",
+  "name": "@miniengine/examples",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "twgl.js": "^5.5.4",
-    "engine": "workspace:*"
+    "@miniengine/engine": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.2.2",

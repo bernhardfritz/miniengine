@@ -20,7 +20,7 @@ importers:
 
   packages/examples:
     dependencies:
-      engine:
+      '@miniengine/engine':
         specifier: workspace:*
         version: link:../engine
       twgl.js:

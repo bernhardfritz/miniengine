@@ -1,5 +1,5 @@
 import './style.css';
-import { render } from 'engine';
+import { render } from '@miniengine/engine';
 import helloTriangle from './hello-triangle';
 import twglCube from './twgl-cube';
 
