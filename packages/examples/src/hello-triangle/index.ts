@@ -1,4 +1,4 @@
-import * as twgl from 'twgl.js';
+import twgl from '@miniengine/twgl';
 import fs from './fs.glsl?raw';
 import vs from './vs.glsl?raw';
 

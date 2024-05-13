@@ -23,9 +23,9 @@ importers:
       '@miniengine/engine':
         specifier: workspace:*
         version: link:../engine
-      twgl.js:
-        specifier: ^5.5.4
-        version: 5.5.4
+      '@miniengine/twgl':
+        specifier: workspace:*
+        version: link:../twgl
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -33,6 +33,16 @@ importers:
       vite:
         specifier: ^5.2.0
         version: 5.2.11
+
+  packages/twgl:
+    dependencies:
+      twgl.js:
+        specifier: ^5.5.4
+        version: 5.5.4
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.4.5
 
 packages:
 
