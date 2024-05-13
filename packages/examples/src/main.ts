@@ -3,6 +3,7 @@ import { render } from '@miniengine/engine';
 import helloTriangle from './hello-triangle';
 import twglCube from './twgl-cube';
 import textures from './textures';
+import normalMapping from './normal-mapping';
 
 const examples: Record<
   string,
@@ -11,6 +12,7 @@ const examples: Record<
   'hello-triangle': helloTriangle,
   'twgl-cube': twglCube,
   'textures': textures,
+  'normal-mapping': normalMapping,
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
