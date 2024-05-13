@@ -1,6 +1,6 @@
 import * as twgl from 'twgl.js';
-import vs from './vs.glsl?raw';
 import fs from './fs.glsl?raw';
+import vs from './vs.glsl?raw';
 
 export default function (gl: WebGL2RenderingContext) {
   twgl.setDefaults({ attribPrefix: 'a_' });

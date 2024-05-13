@@ -1,6 +1,6 @@
 import * as twgl from 'twgl.js';
-import vs from './vs.glsl?raw';
 import fs from './fs.glsl?raw';
+import vs from './vs.glsl?raw';
 const m4 = twgl.m4;
 
 export default function (gl: WebGL2RenderingContext) {
