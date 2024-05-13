@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "twgl.js": "^5.5.4",
-    "@miniengine/engine": "workspace:*"
+    "@miniengine/engine": "workspace:*",
+    "@miniengine/twgl": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
