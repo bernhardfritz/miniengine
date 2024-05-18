@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@miniengine/engine": "workspace:*",
+    "@miniengine/gltf": "workspace:*",
     "@miniengine/twgl": "workspace:*"
   },
   "devDependencies": {

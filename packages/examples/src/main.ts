@@ -4,6 +4,7 @@ import helloTriangle from './hello-triangle';
 import twglCube from './twgl-cube';
 import textures from './textures';
 import normalMapping from './normal-mapping';
+import models from './models';
 
 const examples: Record<
   string,
@@ -13,6 +14,7 @@ const examples: Record<
   'twgl-cube': twglCube,
   'textures': textures,
   'normal-mapping': normalMapping,
+  'models': models,
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

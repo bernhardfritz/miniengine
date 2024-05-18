@@ -23,6 +23,9 @@ importers:
       '@miniengine/engine':
         specifier: workspace:*
         version: link:../engine
+      '@miniengine/gltf':
+        specifier: workspace:*
+        version: link:../gltf
       '@miniengine/twgl':
         specifier: workspace:*
         version: link:../twgl
