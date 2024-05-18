@@ -34,6 +34,19 @@ importers:
         specifier: ^5.2.0
         version: 5.2.11
 
+  packages/gltf:
+    dependencies:
+      '@miniengine/twgl':
+        specifier: workspace:*
+        version: link:../twgl
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.4.5
+
   packages/twgl:
     dependencies:
       twgl.js:
@@ -334,6 +347,9 @@ packages:
       terser:
         optional: true
 
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
 snapshots:
 
   '@esbuild/aix-ppc64@0.20.2':
@@ -529,3 +545,5 @@ snapshots:
       rollup: 4.17.2
     optionalDependencies:
       fsevents: 2.3.3
+
+  zod@3.23.8: {}

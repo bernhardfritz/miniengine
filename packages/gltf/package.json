@@ -1,0 +1,17 @@
+{
+  "name": "@miniengine/gltf",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@miniengine/twgl": "workspace:*",
+    "zod": "^3.23.8"
+  }
+}
