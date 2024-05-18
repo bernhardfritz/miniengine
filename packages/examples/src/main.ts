@@ -7,7 +7,7 @@ import normalMapping from './normal-mapping';
 
 const examples: Record<
   string,
-  (gl: WebGL2RenderingContext) => (time: number) => void
+  (gl: WebGL2RenderingContext) => Promise<(time: number) => void>
 > = {
   'hello-triangle': helloTriangle,
   'twgl-cube': twglCube,

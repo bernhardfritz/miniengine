@@ -2,7 +2,7 @@ import twgl, { m4 } from '@miniengine/twgl';
 import fs from './fs.glsl?raw';
 import vs from './vs.glsl?raw';
 
-export default function (gl: WebGL2RenderingContext) {
+export default async function (gl: WebGL2RenderingContext) {
   twgl.setDefaults({ attribPrefix: '' });
 
   const programInfo = twgl.createProgramInfo(gl, [vs, fs]);

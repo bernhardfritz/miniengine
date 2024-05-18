@@ -1,5 +1,5 @@
-export function render(
-  app: (gl: WebGL2RenderingContext) => (time: number) => void,
+export async function render(
+  app: (gl: WebGL2RenderingContext) => Promise<(time: number) => void>,
   container: Element
 ) {
   const canvas = document.createElement('canvas');
@@ -9,7 +9,7 @@ export function render(
   if (gl === null) {
     throw new Error('Error creating WebGL2 context.');
   }
-  const callback = app(gl);
+  const callback = await app(gl);
   const frameRequestCallback: FrameRequestCallback = (time) => {
     callback(time);
     requestAnimationFrame(frameRequestCallback);
