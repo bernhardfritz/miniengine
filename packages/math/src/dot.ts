@@ -1,10 +1,12 @@
 import { genType } from './genType';
 import { reduce, zip } from '@miniengine/itertools';
 
-export function dot<T extends genType>(x: T, y: T): number {
-  if (typeof x === 'number') {
-    return x * (y as number);
-  } else {
-    return reduce((accumulator, [a, b]) => accumulator + dot(a, b), zip(x, y as Exclude<genType, number>), 0);
-  }
+/**
+ * Calculate the dot product of two vectors.
+ * @param x Specifies the first of two vectors.
+ * @param y Specifies the second of two vectors.
+ * @returns The dot product of two vectors, x and y. i.e., x[0]⋅y[0]+x[1]⋅y[1]+...
+ */
+export function dot<T extends Exclude<genType, number>>(x: T, y: T): number {
+  return reduce((accumulator, [a, b]) => accumulator + a * b, zip(x, y), 0);
 }

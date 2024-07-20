@@ -197,6 +197,21 @@ const handler: ProxyHandler<vec2> = {
   },
 };
 
+/**
+ * Vector constructors take the number of values that they store. So a vec3 takes 3 values. However, all vectors can be constructed from a single value; this results in a vector where all of the values are the value given to the constructor. So:
+ * @example
+ * ```
+ * vec3(1.0) == vec3(1.0, 1.0, 1.0);
+ * ```
+ * Vectors can also be constructed from other vectors, or a combination of vectors and scalars. The values in the output vector are filled in, right to left, by the values in the input scalars and vectors. There must be enough values, counting scalars and vectors, to fill in all of the elements of the output vector. Here are some examples:
+ * @example
+ * ```
+ * vec4(vec2(10.0, 11.0), 1.0, 3.5) == vec4(10.0, vec2(11.0, 1.0), 3.5);
+ * vec3(vec4(1.0, 2.0, 3.0, 4.0)) == vec3(1.0, 2.0, 3.0);
+ * vec4(vec3(1.0, 2.0, 3.0)); // error. Not enough components.
+ * vec2(vec3(1.0, 2.0, 3.0)); // OK
+ * ```
+ */
 export function vec2(...args: (number | number[])[]): vec2 {
   const flattened = args.flat();
   if (flattened.length === 1) {
@@ -204,7 +219,7 @@ export function vec2(...args: (number | number[])[]): vec2 {
     flattened.fill(flattened[0]);
   }
   if (flattened.length < 2) {
-    throw new Error('Not enough components.');
+    throw new Error('Not enough components');
   }
 
   return new Proxy(

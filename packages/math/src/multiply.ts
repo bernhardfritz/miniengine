@@ -18,14 +18,26 @@ type Product<
     ? T
     : U // U is vector
   : T extends number
-  ? U extends number
+  ? U extends mat2 | mat3 | mat4
+    ? U
+    : U extends number
     ? number
     : U // U is vector
-  : T; // T is vector
+  : U extends mat2 | mat3 | mat4
+  ? T // T is vector
+  : U extends number
+  ? T
+  : T; // U is vector
 
-// One operand is a scalar, and the other is a vector or matrix. In this case, the scalar operation is applied independently to each component of the vector or matrix, resulting in the same size vector or matrix.
-// Note that the vector has to be multiplied to the matrix from the right.
-// If a vector is multiplied to a matrix from the left, the result corresponds to multiplying a row vector from the left to the matrix
+/**
+ * Multiply scalars, vectors and matrices.
+ * If one operand is a scalar, and the other is a vector or matrix. In this case, the scalar operation is applied independently to each component of the vector or matrix, resulting in the same size vector or matrix.
+ * Note that the vector has to be multiplied to the matrix from the right.
+ * If a vector is multiplied to a matrix from the left, the result corresponds to multiplying a row vector from the left to the matrix.
+ * @param x The first factor.
+ * @param y The second factor.
+ * @returns The product.
+ */
 export function multiply<
   T extends genType | mat2 | mat3 | mat4,
   U extends genType | mat2 | mat3 | mat4
@@ -58,7 +70,9 @@ export function multiply<
     } else {
       // y is matrix
       return genType[y.length](
-        ...y.map((yy) => dot(x as Exclude<genType, number>, yy))
+        ...y.map((yy) =>
+          dot(x as Exclude<genType, number>, yy as Exclude<genType, number>)
+        )
       ) as Product<T, U>;
     }
   } else {
@@ -81,7 +95,9 @@ export function multiply<
       return transpose(
         matn[x.length](
           ...transpose(x as Exclude<T, genType>).map((xx) =>
-            genType[y.length](y.map((yy) => dot(xx, yy)))
+            genType[y.length](
+              y.map((yy) => dot(xx, yy as Exclude<genType, number>))
+            )
           )
         )
       ) as Product<T, U>;

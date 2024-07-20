@@ -1,15 +1,12 @@
 import { genType } from './genType';
-import { isNumber } from './isNumber';
 
-export function length<T extends genType>(x: T): number {
-  if (isNumber(x)) {
-    return x;
-  } else {
-    return Math.sqrt(
-      x.reduce(
-        (accumulator, component) => accumulator + component * component,
-        0
-      )
-    );
-  }
+/**
+ * Calculate the length of a vector.
+ * @param x Specifies a vector of which to calculate the length.
+ * @returns The length of the vector.
+ */
+export function length<T extends Exclude<genType, number>>(x: T): number {
+  return Math.sqrt(
+    x.reduce((accumulator, component) => accumulator + component * component, 0)
+  );
 }

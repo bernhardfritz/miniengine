@@ -1,11 +1,16 @@
-import { genType } from './genType';
+import { WidenGenType, genType } from './genType';
 import { componentWise } from './component-wise';
 import { isNumber } from './isNumber';
 
-export function tan<T extends genType>(x: T): T {
-  if (isNumber(x)) {
-    return Math.tan(x) as T;
+/**
+ * Return the tangent of the parameter.
+ * @param angle Specify the quantity, in radians, of which to return the tangent.
+ * @returns The trigonometric tangent of angle.
+ */
+export function tan<T extends genType>(angle: T): WidenGenType<T> {
+  if (isNumber(angle)) {
+    return Math.tan(angle) as WidenGenType<T>;
   } else {
-    return componentWise(tan, x) as T;
+    return componentWise(tan, angle) as WidenGenType<T>;
   }
 }

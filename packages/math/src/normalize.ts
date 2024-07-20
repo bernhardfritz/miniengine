@@ -1,12 +1,12 @@
 import { divide } from './divide';
 import { genType } from './genType';
-import { isNumber } from './isNumber';
 import { length } from './length';
 
-export function normalize<T extends genType>(v: T): T {
-  if (isNumber(v)) {
-    return 1 as T;
-  } else {
-    return divide(v, length(v));
-  }
+/**
+ * Calculates the unit vector in the same direction as the original vector.
+ * @param v Specifies the vector to normalize.
+ * @returns A vector with the same direction as its parameter, v, but with length 1.
+ */
+export function normalize<T extends Exclude<genType, number>>(v: T): T {
+  return divide(v, length(v)) as T;
 }

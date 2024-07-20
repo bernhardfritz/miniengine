@@ -3,6 +3,12 @@ import { mat4 } from './mat4';
 import { multiply } from './multiply';
 import { vec3 } from './vec3';
 
+/**
+ * Builds a translation 4 * 4 matrix created from a vector of 3 components.
+ * @param m Input matrix multiplied by this translation matrix.
+ * @param v Coordinates of a translation vector.
+ * @returns A translation matrix based on components of vector v.
+ */
 export function translate(m: mat4, v: vec3) {
   return mat4(
     m[0],

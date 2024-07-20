@@ -4,6 +4,8 @@ import { vec4 } from './vec4';
 
 export type genType = number | vec2 | vec3 | vec4;
 
+export type WidenGenType<T> = T extends number ? number : T;
+
 export const genType = {
   1: Number,
   2: vec2,

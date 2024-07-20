@@ -1,5 +1,15 @@
 import { mat4 } from './mat4';
 
+/**
+ * Creates a matrix for an orthographic parallel viewing volume.
+ * @param left Specify the coordinate for the left vertical clipping plane.
+ * @param right Specify the coordinate for right vertical clipping plane.
+ * @param bottom Specify the coordinate for the bottom horizontal clipping plane.
+ * @param top Specify the coordinates for the top horizontal clipping plane.
+ * @param zNear Specify the distance to the nearer depth clipping plane. This value is negative if the plane is to be behind the viewer.
+ * @param zFar Specify the distance to the farther depth clipping plane. This value is negative if the plane is to be behind the viewer.
+ * @returns A transformation that produces a parallel projection.
+ */
 export function ortho(
   left: number,
   right: number,
