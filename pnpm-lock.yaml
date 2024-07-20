@@ -13,10 +13,6 @@ importers:
         version: 1.6.0
 
   packages/engine:
-    dependencies:
-      twgl.js:
-        specifier: ^5.5.4
-        version: 5.5.4
     devDependencies:
       typescript:
         specifier: ^5.2.2
