@@ -1,4 +1,9 @@
-export function* product<T>(...args: any[]): Generator<T[]> {
+/**
+ * @param iterables The iterables to be used as factors of the cartesian product.
+ * @param repeat An optional argument of type number to specify the desired amount of repetitions (defaults to 1).
+ * @returns The cartesian product of input iterables.
+ */
+export function* product<T>(...args: [...iterables: Iterable<T>[]] | [...iterables: Iterable<T>[], repeat: number]): Generator<T[]> {
   const lastIndex = args.length - 1;
   const [iterables, repeat] = (
     typeof args[lastIndex] === 'number'

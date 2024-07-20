@@ -1,6 +1,11 @@
 import { range } from './range';
 import { reversed } from './reversed'
 
+/**
+ * @param iterable The iterable to be permuted.
+ * @param r If {@link r} is not specified or is undefined, then {@link r} defaults to the length of the {@link iterable} and all possible full-length permutations are generated.
+ * @returns Successive {@link r} length permutations of elements from the {@link iterable}.
+ */
 export function* permutations<T>(iterable: Iterable<T>, r?: number): Generator<T[]> {
   const pool = Array.from(iterable);
   const n = pool.length;
