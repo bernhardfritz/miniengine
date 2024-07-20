@@ -26,9 +26,12 @@ importers:
       '@miniengine/gltf':
         specifier: workspace:*
         version: link:../gltf
-      '@miniengine/twgl':
+      '@miniengine/math':
         specifier: workspace:*
-        version: link:../twgl
+        version: link:../math
+      twgl.js:
+        specifier: ^5.5.4
+        version: 5.5.4
     devDependencies:
       typescript:
         specifier: ^5.2.2

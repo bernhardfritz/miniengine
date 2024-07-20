@@ -1,13 +1,22 @@
-import twgl from '@miniengine/twgl';
+import {
+  Arrays,
+  createBufferInfoFromArrays,
+  createProgramInfo,
+  createVertexArrayInfo,
+  drawBufferInfo,
+  resizeCanvasToDisplaySize,
+  setBuffersAndAttributes,
+  setDefaults,
+} from 'twgl.js';
 import fs from './fs.glsl?raw';
 import vs from './vs.glsl?raw';
 
 export default async function (gl: WebGL2RenderingContext) {
-  twgl.setDefaults({ attribPrefix: 'a_' });
+  setDefaults({ attribPrefix: 'a_' });
 
-  const programInfo = twgl.createProgramInfo(gl, [vs, fs]);
+  const programInfo = createProgramInfo(gl, [vs, fs]);
 
-  const arrays: twgl.Arrays = {
+  const arrays: Arrays = {
     position: {
       numComponents: 3,
       data: [0, 0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0],
@@ -21,14 +30,14 @@ export default async function (gl: WebGL2RenderingContext) {
       data: [0, 1, 2],
     },
   };
-  const vertexArrayInfo = twgl.createVertexArrayInfo(
+  const vertexArrayInfo = createVertexArrayInfo(
     gl,
     programInfo,
-    twgl.createBufferInfoFromArrays(gl, arrays)
+    createBufferInfoFromArrays(gl, arrays)
   );
 
   return (_time: number) => {
-    twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
+    resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     gl.enable(gl.DEPTH_TEST);
@@ -36,7 +45,7 @@ export default async function (gl: WebGL2RenderingContext) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.useProgram(programInfo.program);
-    twgl.setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
-    twgl.drawBufferInfo(gl, vertexArrayInfo);
+    setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
+    drawBufferInfo(gl, vertexArrayInfo);
   };
 }
