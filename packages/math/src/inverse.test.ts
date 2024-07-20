@@ -5,7 +5,7 @@ import { inverse } from './inverse';
 import { multiply } from './multiply';
 
 describe('inverse', () => {
-  it('should return the inverse matrix', () => {
+  it('should calculate the inverse of a matrix', () => {
     const m = mat4(
       vec4(2, 1, 3, 0),
       vec4(1, 2, 1, 0),
