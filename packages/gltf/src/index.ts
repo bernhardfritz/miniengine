@@ -1,13 +1,13 @@
+import { Arrays, FullArraySpec, TypedArrayConstructor } from 'twgl.js';
 import { z } from 'zod';
 import gltfSchema from './gltf.schema';
-import twgl from '@miniengine/twgl';
 
 type Gltf = z.infer<typeof gltfSchema>;
 
 export async function loadGltf(
   gl: WebGL2RenderingContext,
   url: string | URL
-): Promise<twgl.Arrays[]> {
+): Promise<Arrays[]> {
   const json = await load(url, 'json');
   const gltf: Gltf = gltfSchema.parse(json);
   if (!isHasMeshesAccessorsBufferViewsAndBuffers(gltf)) {
@@ -18,10 +18,10 @@ export async function loadGltf(
   const bufferViews = new Array<TypedArray>(gltf.bufferViews.length);
   const buffers = new Array<ArrayBuffer>(gltf.buffers.length);
   const baseURL = new URL(url, location.href);
-  const arrayOfArrays: twgl.Arrays[] = [];
+  const arrayOfArrays: Arrays[] = [];
   for (const mesh of gltf.meshes) {
     for (const primitive of mesh.primitives) {
-      const arrays: twgl.Arrays = {};
+      const arrays: Arrays = {};
       for (const [attributeName, accessorIndex] of Object.entries(
         primitive.attributes
       )) {
@@ -75,7 +75,7 @@ async function accessorToFullArraySpec(
   bufferViews: TypedArray[],
   buffers: ArrayBuffer[],
   baseURL: URL
-): Promise<twgl.FullArraySpec> {
+): Promise<FullArraySpec> {
   const accessor = gltf.accessors[accessorIndex];
   if (accessor.bufferView === undefined) {
     throw new Error('No bufferView');
@@ -152,7 +152,7 @@ function accessorTypeToNumComponents(accessorType: string): number {
 function glTypeToTypedArray(
   gl: WebGL2RenderingContext,
   componentType: number
-): twgl.TypedArrayConstructor {
+): TypedArrayConstructor {
   switch (componentType) {
     case gl.BYTE:
       return Int8Array;
