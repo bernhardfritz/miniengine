@@ -11,7 +11,7 @@
   "dependencies": {
     "@miniengine/engine": "workspace:*",
     "@miniengine/gltf": "workspace:*",
-    "@miniengine/twgl": "workspace:*"
+    "twgl.js": "^5.5.4"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
