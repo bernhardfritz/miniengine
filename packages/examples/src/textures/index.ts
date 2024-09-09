@@ -1,15 +1,30 @@
-import twgl, { m4, primitives } from '@miniengine/twgl';
+import {
+  createProgramInfo,
+  createTexture,
+  createVertexArrayInfo,
+  drawBufferInfo,
+  m4,
+  primitives,
+  resizeCanvasToDisplaySize,
+  setBuffersAndAttributes,
+  setDefaults,
+  setUniforms,
+} from 'twgl.js';
 import fs from './fs.glsl?raw';
 import vs from './vs.glsl?raw';
 
 export default async function (gl: WebGL2RenderingContext) {
-  twgl.setDefaults({ attribPrefix: 'a_' });
+  setDefaults({ attribPrefix: 'a_' });
 
-  const programInfo = twgl.createProgramInfo(gl, [vs, fs]);
+  const programInfo = createProgramInfo(gl, [vs, fs]);
 
-  const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, primitives.createSphereBufferInfo(gl, 1.5, 24, 12));
+  const vertexArrayInfo = createVertexArrayInfo(
+    gl,
+    programInfo,
+    primitives.createSphereBufferInfo(gl, 1.5, 24, 12)
+  );
 
-  const u_diffuse = twgl.createTexture(gl, {
+  const u_diffuse = createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
     src: 'brickwall.jpg',
@@ -31,7 +46,7 @@ export default async function (gl: WebGL2RenderingContext) {
 
   return (time: number) => {
     time *= 0.0001;
-    twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
+    resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     gl.enable(gl.DEPTH_TEST);
@@ -62,8 +77,8 @@ export default async function (gl: WebGL2RenderingContext) {
     });
 
     gl.useProgram(programInfo.program);
-    twgl.setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
-    twgl.setUniforms(programInfo, uniforms);
-    twgl.drawBufferInfo(gl, vertexArrayInfo);
+    setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
+    setUniforms(programInfo, uniforms);
+    drawBufferInfo(gl, vertexArrayInfo);
   };
 }

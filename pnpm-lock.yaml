@@ -13,10 +13,6 @@ importers:
         version: 1.6.0
 
   packages/engine:
-    dependencies:
-      twgl.js:
-        specifier: ^5.5.4
-        version: 5.5.4
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -30,9 +26,9 @@ importers:
       '@miniengine/gltf':
         specifier: workspace:*
         version: link:../gltf
-      '@miniengine/twgl':
-        specifier: workspace:*
-        version: link:../twgl
+      twgl.js:
+        specifier: ^5.5.4
+        version: 5.5.4
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -53,9 +49,9 @@ importers:
 
   packages/gltf:
     dependencies:
-      '@miniengine/twgl':
-        specifier: workspace:*
-        version: link:../twgl
+      twgl.js:
+        specifier: ^5.5.4
+        version: 5.5.4
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -65,16 +61,6 @@ importers:
         version: 5.4.5
 
   packages/itertools:
-    devDependencies:
-      typescript:
-        specifier: ^5.2.2
-        version: 5.4.5
-
-  packages/twgl:
-    dependencies:
-      twgl.js:
-        specifier: ^5.5.4
-        version: 5.5.4
     devDependencies:
       typescript:
         specifier: ^5.2.2
