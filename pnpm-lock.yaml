@@ -41,6 +41,16 @@ importers:
         specifier: ^5.2.0
         version: 5.2.11
 
+  packages/glm:
+    dependencies:
+      '@miniengine/itertools':
+        specifier: workspace:*
+        version: link:../itertools
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.4.5
+
   packages/gltf:
     dependencies:
       '@miniengine/twgl':
