@@ -1,9 +1,20 @@
 import {
+  inverse,
+  lookAt,
+  mat4,
+  multiply,
+  perspective,
+  radians,
+  rotate,
+  transpose,
+  vec3,
+  vec4,
+} from '@miniengine/glm';
+import {
   createProgramInfo,
   createTexture,
   createVertexArrayInfo,
   drawBufferInfo,
-  m4,
   primitives,
   resizeCanvasToDisplaySize,
   setBuffersAndAttributes,
@@ -31,17 +42,17 @@ export default async function (gl: WebGL2RenderingContext) {
   });
 
   const uniforms = {
-    u_lightWorldPos: [1, 8, -10],
-    u_lightColor: [1, 1, 1, 1],
-    u_ambient: [0.1, 0.1, 0.1, 1],
-    u_specular: [0.2, 0.2, 0.2, 1],
+    u_lightWorldPos: vec3(1, 8, -10),
+    u_lightColor: vec4(1, 1, 1, 1),
+    u_ambient: vec4(0.1, 0.1, 0.1, 1),
+    u_specular: vec4(0.2, 0.2, 0.2, 1),
     u_shininess: 32,
     u_specularFactor: 1,
     u_diffuse,
-    u_viewInverse: m4.identity(),
-    u_world: m4.identity(),
-    u_worldInverseTranspose: m4.identity(),
-    u_worldViewProjection: m4.identity(),
+    u_viewInverse: mat4(1).flat(),
+    u_world: mat4(1).flat(),
+    u_worldInverseTranspose: mat4(1).flat(),
+    u_worldViewProjection: mat4(1).flat(),
   };
 
   return (time: number) => {
@@ -53,27 +64,26 @@ export default async function (gl: WebGL2RenderingContext) {
     gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    const fov = (30 * Math.PI) / 180;
+    const fov = radians(30);
     const aspect =
       (gl.canvas as HTMLCanvasElement).clientWidth /
       (gl.canvas as HTMLCanvasElement).clientHeight;
     const zNear = 0.5;
     const zFar = 10;
-    const projection = m4.perspective(fov, aspect, zNear, zFar);
-    const eye = [1, 4, -6];
-    const target = [0, 0, 0];
-    const up = [0, 1, 0];
+    const projection = perspective(fov, aspect, zNear, zFar);
+    const eye = vec3(1, 4, -6);
+    const target = vec3(0, 0, 0);
+    const up = vec3(0, 1, 0);
 
-    const camera = m4.lookAt(eye, target, up);
-    const view = m4.inverse(camera);
-    const viewProjection = m4.multiply(projection, view);
-    const world = m4.rotationY(time);
+    const view = lookAt(eye, target, up);
+    const viewProjection = multiply(projection, view);
+    const world = rotate(mat4(1), time, vec3(0, 1, 0));
 
     Object.assign(uniforms, {
-      u_viewInverse: camera,
-      u_world: world,
-      u_worldInverseTranspose: m4.transpose(m4.inverse(world)),
-      u_worldViewProjection: m4.multiply(viewProjection, world),
+      u_viewInverse: inverse(view).flat(),
+      u_world: world.flat(),
+      u_worldInverseTranspose: transpose(inverse(world)).flat(),
+      u_worldViewProjection: multiply(viewProjection, world).flat(),
     });
 
     gl.useProgram(programInfo.program);
