@@ -1,21 +1,32 @@
 import {
+  inverse,
+  lookAt,
+  mat4,
+  multiply,
+  perspective,
+  radians,
+  rotate,
+  subtract,
+  transpose,
+  vec2,
+  vec3,
+  vec4,
+} from '@miniengine/glm';
+import {
   Arrays,
   createBufferInfoFromArrays,
   createProgramInfo,
   createTexture,
   createVertexArrayInfo,
   drawBufferInfo,
-  m4,
   primitives,
   resizeCanvasToDisplaySize,
   setBuffersAndAttributes,
   setDefaults,
   setUniforms,
-  v3,
 } from 'twgl.js';
 import fs from './fs.glsl?raw';
 import vs from './vs.glsl?raw';
-import * as v2 from './v2';
 
 export default async function (gl: WebGL2RenderingContext) {
   setDefaults({ attribPrefix: 'a_' });
@@ -44,18 +55,18 @@ export default async function (gl: WebGL2RenderingContext) {
   });
 
   const uniforms = {
-    u_lightWorldPos: [1, 8, -10],
-    u_lightColor: [1, 1, 1, 1],
-    u_ambient: [0.1, 0.1, 0.1, 1],
-    u_specular: [0.2, 0.2, 0.2, 1],
+    u_lightWorldPos: vec3(1, 8, -10),
+    u_lightColor: vec4(1, 1, 1, 1),
+    u_ambient: vec4(0.1, 0.1, 0.1, 1),
+    u_specular: vec4(0.2, 0.2, 0.2, 1),
     u_shininess: 32,
     u_specularFactor: 1,
     u_diffuse,
     u_normal,
-    u_viewInverse: m4.identity(),
-    u_world: m4.identity(),
-    u_worldInverseTranspose: m4.identity(),
-    u_worldViewProjection: m4.identity(),
+    u_viewInverse: mat4(1).flat(),
+    u_world: mat4(1).flat(),
+    u_worldInverseTranspose: mat4(1).flat(),
+    u_worldViewProjection: mat4(1).flat(),
   };
 
   return (time: number) => {
@@ -67,27 +78,26 @@ export default async function (gl: WebGL2RenderingContext) {
     gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    const fov = (30 * Math.PI) / 180;
+    const fov = radians(30);
     const aspect =
       (gl.canvas as HTMLCanvasElement).clientWidth /
       (gl.canvas as HTMLCanvasElement).clientHeight;
     const zNear = 0.5;
     const zFar = 10;
-    const projection = m4.perspective(fov, aspect, zNear, zFar);
-    const eye = [1, 4, -6];
-    const target = [0, 0, 0];
-    const up = [0, 1, 0];
+    const projection = perspective(fov, aspect, zNear, zFar);
+    const eye = vec3(1, 4, -6);
+    const target = vec3(0, 0, 0);
+    const up = vec3(0, 1, 0);
 
-    const camera = m4.lookAt(eye, target, up);
-    const view = m4.inverse(camera);
-    const viewProjection = m4.multiply(projection, view);
-    const world = m4.rotationY(time);
+    const view = lookAt(eye, target, up);
+    const viewProjection = multiply(projection, view);
+    const world = rotate(mat4(1), time, vec3(0, 1, 0));
 
     Object.assign(uniforms, {
-      u_viewInverse: camera,
-      u_world: world,
-      u_worldInverseTranspose: m4.transpose(m4.inverse(world)),
-      u_worldViewProjection: m4.multiply(viewProjection, world),
+      u_viewInverse: inverse(view).flat(),
+      u_world: world.flat(),
+      u_worldInverseTranspose: transpose(inverse(world)).flat(),
+      u_worldViewProjection: multiply(viewProjection, world).flat(),
     });
 
     gl.useProgram(programInfo.program);
@@ -107,36 +117,30 @@ function withTangent(arrays: Arrays): Arrays {
 
   for (let i = 0; i < indices.length; i += 3) {
     // positions
-    const pos1: v3.Vec3 = position.slice(
-      indices[i + 0] * 3,
-      indices[i + 0] * 3 + 3
+    const pos1 = vec3(
+      ...position.slice(indices[i + 0] * 3, indices[i + 0] * 3 + 3)
     );
-    const pos2: v3.Vec3 = position.slice(
-      indices[i + 1] * 3,
-      indices[i + 1] * 3 + 3
+    const pos2 = vec3(
+      ...position.slice(indices[i + 1] * 3, indices[i + 1] * 3 + 3)
     );
-    const pos3: v3.Vec3 = position.slice(
-      indices[i + 2] * 3,
-      indices[i + 2] * 3 + 3
+    const pos3 = vec3(
+      ...position.slice(indices[i + 2] * 3, indices[i + 2] * 3 + 3)
     );
     // texture coordinates
-    const uv1: v2.Vec2 = texcoord.slice(
-      indices[i + 0] * 2,
-      indices[i + 0] * 2 + 2
+    const uv1 = vec2(
+      ...texcoord.slice(indices[i + 0] * 2, indices[i + 0] * 2 + 2)
     );
-    const uv2: v2.Vec2 = texcoord.slice(
-      indices[i + 1] * 2,
-      indices[i + 1] * 2 + 2
+    const uv2 = vec2(
+      ...texcoord.slice(indices[i + 1] * 2, indices[i + 1] * 2 + 2)
     );
-    const uv3: v2.Vec2 = texcoord.slice(
-      indices[i + 2] * 2,
-      indices[i + 2] * 2 + 2
+    const uv3 = vec2(
+      ...texcoord.slice(indices[i + 2] * 2, indices[i + 2] * 2 + 2)
     );
 
-    const edge1: v3.Vec3 = v3.subtract(pos2, pos1);
-    const edge2: v3.Vec3 = v3.subtract(pos3, pos1);
-    const deltaUV1: v2.Vec2 = v2.subtract(uv2, uv1);
-    const deltaUV2: v2.Vec2 = v2.subtract(uv3, uv1);
+    const edge1 = subtract(pos2, pos1);
+    const edge2 = subtract(pos3, pos1);
+    const deltaUV1 = subtract(uv2, uv1);
+    const deltaUV2 = subtract(uv3, uv1);
 
     const f = 1 / (deltaUV1[0] * deltaUV2[1] - deltaUV2[0] * deltaUV1[1]);
 
