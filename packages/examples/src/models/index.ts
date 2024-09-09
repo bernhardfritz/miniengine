@@ -1,22 +1,36 @@
-import twgl, { m4, v3 } from '@miniengine/twgl';
+import { loadGltf } from '@miniengine/gltf';
+import {
+  Arrays,
+  FullArraySpec,
+  createBufferInfoFromArrays,
+  createProgramInfo,
+  createTexture,
+  createVertexArrayInfo,
+  drawBufferInfo,
+  m4,
+  resizeCanvasToDisplaySize,
+  setBuffersAndAttributes,
+  setDefaults,
+  setUniforms,
+  v3,
+} from 'twgl.js';
 import fs from './fs.glsl?raw';
 import vs from './vs.glsl?raw';
-import { loadGltf } from '@miniengine/gltf';
 
 export default async function (gl: WebGL2RenderingContext) {
-  twgl.setDefaults({ attribPrefix: 'a_' });
+  setDefaults({ attribPrefix: 'a_' });
 
-  const programInfo = twgl.createProgramInfo(gl, [vs, fs]);
+  const programInfo = createProgramInfo(gl, [vs, fs]);
 
   const arrayOfArrays = await loadGltf(gl, 'Fox.gltf');
   const arrays = withNormals(arrayOfArrays[0]);
-  const vertexArrayInfo = twgl.createVertexArrayInfo(
+  const vertexArrayInfo = createVertexArrayInfo(
     gl,
     programInfo,
-    twgl.createBufferInfoFromArrays(gl, arrays)
+    createBufferInfoFromArrays(gl, arrays)
   );
 
-  const u_diffuse = twgl.createTexture(gl, {
+  const u_diffuse = createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
     src: 'Texture.png',
@@ -38,7 +52,7 @@ export default async function (gl: WebGL2RenderingContext) {
 
   return (time: number) => {
     time *= 0.0001;
-    twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
+    resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     gl.enable(gl.DEPTH_TEST);
@@ -69,26 +83,26 @@ export default async function (gl: WebGL2RenderingContext) {
     });
 
     gl.useProgram(programInfo.program);
-    twgl.setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
-    twgl.setUniforms(programInfo, uniforms);
-    twgl.drawBufferInfo(gl, vertexArrayInfo);
+    setBuffersAndAttributes(gl, programInfo, vertexArrayInfo);
+    setUniforms(programInfo, uniforms);
+    drawBufferInfo(gl, vertexArrayInfo);
   };
 }
 
-function withNormals(arrays: twgl.Arrays): twgl.Arrays {
-  const positions = (arrays.POSITION as twgl.FullArraySpec).data as Float32Array; // vec3
+function withNormals(arrays: Arrays): Arrays {
+  const positions = (arrays.POSITION as FullArraySpec).data as Float32Array; // vec3
   const normals = new Float32Array(positions.length);
 
   for (let i = 0; i < positions.length; i += 3) {
     // positions
-    const pos1: twgl.v3.Vec3 = positions.slice((i + 0) * 3, (i + 0) * 3 + 3);
-    const pos2: twgl.v3.Vec3 = positions.slice((i + 1) * 3, (i + 1) * 3 + 3);
-    const pos3: twgl.v3.Vec3 = positions.slice((i + 2) * 3, (i + 2) * 3 + 3);
+    const pos1: v3.Vec3 = positions.slice((i + 0) * 3, (i + 0) * 3 + 3);
+    const pos2: v3.Vec3 = positions.slice((i + 1) * 3, (i + 1) * 3 + 3);
+    const pos3: v3.Vec3 = positions.slice((i + 2) * 3, (i + 2) * 3 + 3);
     // edges
-    const edge1: twgl.v3.Vec3 = v3.subtract(pos2, pos1);
-    const edge2: twgl.v3.Vec3 = v3.subtract(pos3, pos1);
+    const edge1: v3.Vec3 = v3.subtract(pos2, pos1);
+    const edge2: v3.Vec3 = v3.subtract(pos3, pos1);
     // normal
-    const normal: twgl.v3.Vec3 = v3.normalize(v3.cross(edge1, edge2));
+    const normal: v3.Vec3 = v3.normalize(v3.cross(edge1, edge2));
     normals[(i + 0) * 3 + 0] = normal[0];
     normals[(i + 0) * 3 + 1] = normal[1];
     normals[(i + 0) * 3 + 2] = normal[2];
