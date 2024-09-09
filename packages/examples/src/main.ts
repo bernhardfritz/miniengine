@@ -1,7 +1,6 @@
 import './style.css';
 import { render } from '@miniengine/engine';
 import helloTriangle from './hello-triangle';
-import twglCube from './twgl-cube';
 import textures from './textures';
 import normalMapping from './normal-mapping';
 import models from './models';
@@ -11,7 +10,6 @@ const examples: Record<
   (gl: WebGL2RenderingContext) => Promise<(time: number) => void>
 > = {
   'hello-triangle': helloTriangle,
-  'twgl-cube': twglCube,
   'textures': textures,
   'normal-mapping': normalMapping,
   'models': models,
