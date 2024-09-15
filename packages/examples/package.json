@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@miniengine/engine": "workspace:*",
+    "@miniengine/core": "workspace:*",
     "@miniengine/gltf": "workspace:*",
     "@miniengine/glm": "workspace:*",
     "twgl.js": "^5.5.4"

@@ -36,7 +36,7 @@ export default async function (gl: WebGL2RenderingContext) {
     createBufferInfoFromArrays(gl, arrays)
   );
 
-  return (_time: number) => {
+  return (_deltaTime: number) => {
     resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 

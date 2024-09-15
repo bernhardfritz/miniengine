@@ -2,6 +2,7 @@ import { range } from './range';
 import { reversed } from './reversed'
 
 /**
+ * Computes permutations of elements from the iterable.
  * @param iterable The iterable to be permuted.
  * @param r If {@link r} is not specified or is undefined, then {@link r} defaults to the length of the {@link iterable} and all possible full-length permutations are generated.
  * @returns Successive {@link r} length permutations of elements from the {@link iterable}.

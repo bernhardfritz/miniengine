@@ -1,4 +1,5 @@
 /**
+ * Reverses an iterable.
  * @param iterable The iterable to be reversed.
  * @returns A reverse iterator.
  */

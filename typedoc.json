@@ -1,0 +1,12 @@
+{
+  "entryPoints": ["packages/*"],
+  "exclude": ["packages/examples/"],
+  "entryPointStrategy": "packages",
+  "packageOptions": {
+    "entryPoints": "src/index.ts"
+  },
+  "navigationLinks": {
+    "Examples": "/miniengine/examples/",
+    "GitHub": "https://github.com/bernhardfritz/miniengine"
+  }
+}

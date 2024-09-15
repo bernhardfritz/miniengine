@@ -4,6 +4,13 @@ import gltfSchema from './gltf.schema';
 
 type Gltf = z.infer<typeof gltfSchema>;
 
+/**
+ * Loads a {@link https://github.com/KhronosGroup/glTF | glTF} file asynchronously.
+ * @experimental
+ * @param gl The rendering context.
+ * @param url The URL to load the glTF file from.
+ * @returns An array of meshes.
+ */
 export async function loadGltf(
   gl: WebGL2RenderingContext,
   url: string | URL

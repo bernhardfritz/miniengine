@@ -1,4 +1,5 @@
 /**
+ * Reduces an iterable to a single value.
  * @param fn The function of two arguments to cumulatively apply to the items of {@link iterable}, from left to right, so as to reduce the iterable to a single value. For example, reduce((x, y) => x + y, [1, 2, 3, 4, 5]) calculates ((((1 + 2) + 3) + 4) + 5).
  * @param iterable The iterable to be reduced.
  * @param initializer If the optional {@link initializer} is present, it is placed before the items of the iterable in the calculation, and serves as a default when the {@link iterable} is empty. If {@link initializer} is not given and {@link iterable} contains only one item, the first item is returned.
