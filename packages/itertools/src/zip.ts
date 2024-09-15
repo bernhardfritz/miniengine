@@ -1,4 +1,5 @@
 /**
+ * Iterates over several iterables in parallel, producing tuples with an item from each one.
  * @param iterables The iterables to be zipped.
  * @returns An iterator of tuples, where the i-th tuple contains the i-th element from each of the argument iterables.
  */

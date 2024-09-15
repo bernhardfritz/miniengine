@@ -1074,7 +1074,7 @@ const writeSwizzleMasks = [
   ].map((tuple) => tuple.join('')),
 ];
 
-export /* for testing */ type Vec4SwizzleComponentKeys =
+type Vec4SwizzleComponentKeys =
   | 'x'
   | 'y'
   | 'z'
