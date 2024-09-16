@@ -4,6 +4,7 @@ import helloTriangle from './hello-triangle';
 import textures from './textures';
 import normalMapping from './normal-mapping';
 import models from './models';
+import basicHeightmap from './basic-heightmap';
 
 const examples: Record<
   string,
@@ -13,6 +14,7 @@ const examples: Record<
   'textures': textures,
   'normal-mapping': normalMapping,
   'models': models,
+  'basic-heightmap': basicHeightmap,
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
