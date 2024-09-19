@@ -6,6 +6,7 @@ import normalMapping from './normal-mapping';
 import models from './models';
 import basicHeightmap from './basic-heightmap';
 import advancedHeightmap from './advanced-heightmap';
+import expertHeightmap from './expert-heightmap';
 
 const examples: Record<
   string,
@@ -17,6 +18,7 @@ const examples: Record<
   'models': models,
   'basic-heightmap': basicHeightmap,
   'advanced-heightmap': advancedHeightmap,
+  'expert-heightmap': expertHeightmap,
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
