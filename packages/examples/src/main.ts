@@ -5,6 +5,7 @@ import textures from './textures';
 import normalMapping from './normal-mapping';
 import models from './models';
 import basicHeightmap from './basic-heightmap';
+import advancedHeightmap from './advanced-heightmap';
 
 const examples: Record<
   string,
@@ -15,6 +16,7 @@ const examples: Record<
   'normal-mapping': normalMapping,
   'models': models,
   'basic-heightmap': basicHeightmap,
+  'advanced-heightmap': advancedHeightmap,
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
