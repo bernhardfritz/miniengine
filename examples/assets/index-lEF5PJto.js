@@ -204,7 +204,7 @@ void main() {
 }
 `;async function ad(e){mt({attribPrefix:"a_"});const t=ft(e,[id,od]),n=await td(e,"Fox.gltf"),r=sd(n[0]),o=ht(e,t,kt(e,r)),i=Me(e,{min:e.NEAREST,mag:e.NEAREST,src:"Texture.png"}),a={u_lightWorldPos:I(100,50,-333),u_lightColor:k(1,1,1,1),u_ambient:k(.1,.1,.1,1),u_specular:k(.2,.2,.2,1),u_shininess:32,u_specularFactor:1,u_diffuse:i,u_viewInverse:B(1).flat(),u_world:B(1).flat(),u_worldInverseTranspose:B(1).flat(),u_worldViewProjection:B(1).flat()};return s=>{s*=1e-4,pt(e.canvas),e.viewport(0,0,e.canvas.width,e.canvas.height),e.enable(e.DEPTH_TEST),e.enable(e.CULL_FACE),e.clear(e.COLOR_BUFFER_BIT|e.DEPTH_BUFFER_BIT);const u=yt(30),l=e.canvas.clientWidth/e.canvas.clientHeight,d=Ft(u,l,50,1e3),_=I(100,100,-200),m=I(0,40,-11),p=I(0,1,0),y=jt(_,m,p),b=P(d,y),v=Ot(B(1),s,I(0,1,0));Object.assign(a,{u_viewInverse:ve(y).flat(),u_world:v.flat(),u_worldInverseTranspose:Oe(ve(v)).flat(),u_worldViewProjection:P(b,v).flat()}),e.useProgram(t.program),Xe(e,t,o),lt(t,a),dt(e,o)}}function sd(e){const t=e.POSITION.data,n=new Float32Array(t.length);for(let r=0;r<t.length/3;r+=3){const o=I(...t.slice((r+0)*3,(r+0)*3+3)),i=I(...t.slice((r+1)*3,(r+1)*3+3)),a=I(...t.slice((r+2)*3,(r+2)*3+3)),s=J(i,o),u=J(a,o),l=Yt(kn(s,u));n[(r+0)*3+0]=l[0],n[(r+0)*3+1]=l[1],n[(r+0)*3+2]=l[2],n[(r+1)*3+0]=l[0],n[(r+1)*3+1]=l[1],n[(r+1)*3+2]=l[2],n[(r+2)*3+0]=l[0],n[(r+2)*3+1]=l[1],n[(r+2)*3+2]=l[2]}return{...e,NORMAL:{numComponents:3,data:n}}}const cd=`#version 300 es
 
-precision mediump float;
+precision highp float;
 
 in vec2 v_texCoord;
 in vec3 v_normal;
@@ -260,7 +260,7 @@ void main() {
 }
 `;async function ld(e){mt({attribPrefix:"a_"});const t=ft(e,[ud,cd]),n=ht(e,t,await fd(e,"heightmap.png",0,1.5,4,4,255,255)),r=Me(e,{min:e.NEAREST,mag:e.NEAREST,src:"hypsometric-tint.png"}),o={u_lightWorldPos:I(1,8,-10),u_lightColor:k(1,1,1,1),u_ambient:k(.1,.1,.1,1),u_specular:k(.2,.2,.2,1),u_shininess:32,u_specularFactor:0,u_diffuse:r,u_viewInverse:B(1).flat(),u_world:B(1).flat(),u_worldInverseTranspose:B(1).flat(),u_worldViewProjection:B(1).flat()};return i=>{i*=1e-4,pt(e.canvas),e.viewport(0,0,e.canvas.width,e.canvas.height),e.enable(e.DEPTH_TEST),e.enable(e.CULL_FACE),e.clear(e.COLOR_BUFFER_BIT|e.DEPTH_BUFFER_BIT);const a=yt(30),s=e.canvas.clientWidth/e.canvas.clientHeight,f=Ft(a,s,.5,10),h=I(1,4,-6),d=I(0,0,0),_=I(0,1,0),m=jt(h,d,_),p=P(f,m),y=Ot(B(1),i,I(0,1,0));Object.assign(o,{u_viewInverse:ve(m).flat(),u_world:y.flat(),u_worldInverseTranspose:Oe(ve(y)).flat(),u_worldViewProjection:P(p,y).flat()}),e.useProgram(t.program),Xe(e,t,n),lt(t,o),dt(e,n)}}async function fd(e,t,n=0,r=1,o=1,i=1,a=1,s=1,u=pa.identity()){const l=await dd(t),f=St.createPlaneVertices(o,i,a,s),h=f.position;for(let y=0;y<h.length;y+=3){const[b,v]=[h[y+0],h[y+2]],E=pr(zt(0,l.width-1,b/o+.5)),w=(pr(zt(0,l.height-1,v/i+.5))*l.width+E)*4,R=l.data[w+0],M=zt(n,r,R/255);h[y+1]=M}hd(f);const d=f.normal,_=f.texcoord,m=f.indices,p=St.reorientVertices({position:h,normal:d,texcoord:_,indices:m},u);return kt(e,p)}async function dd(e){const n=await(await fetch(e)).blob(),r=await createImageBitmap(n),i=new OffscreenCanvas(r.width,r.height).getContext("2d");if(i===null)throw new Error("Cannot create context");return i.drawImage(r,0,0),i.getImageData(0,0,r.width,r.height)}function hd(e){const t=e.position,n=e.normal,r=e.indices;for(let o=0;o<r.length;o+=3){const i=I(...t.slice(r[o+0]*3,r[o+0]*3+3)),a=I(...t.slice(r[o+1]*3,r[o+1]*3+3)),s=I(...t.slice(r[o+2]*3,r[o+2]*3+3)),u=J(a,i),l=J(s,i),f=Yt(kn(u,l));n[r[o+0]*3+0]=f[0],n[r[o+0]*3+1]=f[1],n[r[o+0]*3+2]=f[2],n[r[o+1]*3+0]=f[0],n[r[o+1]*3+1]=f[1],n[r[o+1]*3+2]=f[2],n[r[o+2]*3+0]=f[0],n[r[o+2]*3+1]=f[1],n[r[o+2]*3+2]=f[2]}}const md=`#version 300 es
 
-precision mediump float;
+precision highp float;
 
 in vec2 v_texCoord;
 in vec3 v_surfaceToLight;
@@ -320,7 +320,7 @@ void main() {
 }
 `;async function yd(e){mt({attribPrefix:"a_"});const t=ft(e,[pd,md]),n=ht(e,t,St.createPlaneBufferInfo(e,4,4,255,255)),r=Me(e,{min:e.NEAREST,mag:e.NEAREST,src:"hypsometric-tint.png"}),o=Me(e,{min:e.LINEAR_MIPMAP_LINEAR,mag:e.LINEAR,src:"heightmap.png"}),i={u_lightWorldPos:I(1,8,-10),u_lightColor:k(1,1,1,1),u_ambient:k(.1,.1,.1,1),u_specular:k(.2,.2,.2,1),u_shininess:32,u_specularFactor:0,u_diffuse:r,u_viewInverse:B(1).flat(),u_world:B(1).flat(),u_worldInverseTranspose:B(1).flat(),u_worldViewProjection:B(1).flat(),u_heightmap:o,u_minElevation:0,u_maxElevation:1.5};return a=>{a*=1e-4,pt(e.canvas),e.viewport(0,0,e.canvas.width,e.canvas.height),e.enable(e.DEPTH_TEST),e.enable(e.CULL_FACE),e.clear(e.COLOR_BUFFER_BIT|e.DEPTH_BUFFER_BIT);const s=yt(30),u=e.canvas.clientWidth/e.canvas.clientHeight,h=Ft(s,u,.5,10),d=I(1,4,-6),_=I(0,0,0),m=I(0,1,0),p=jt(d,_,m),y=P(h,p),b=Ot(B(1),a,I(0,1,0));Object.assign(i,{u_viewInverse:ve(p).flat(),u_world:b.flat(),u_worldInverseTranspose:Oe(ve(b)).flat(),u_worldViewProjection:P(y,b).flat()}),e.useProgram(t.program),Xe(e,t,n),lt(t,i),dt(e,n)}}const _d=`#version 300 es
 
-precision mediump float;
+precision highp float;
 
 in vec2 v_texCoord;
 in vec3 v_normal;
