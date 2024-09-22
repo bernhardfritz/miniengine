@@ -7,6 +7,7 @@ import models from './models';
 import basicHeightmap from './basic-heightmap';
 import advancedHeightmap from './advanced-heightmap';
 import expertHeightmap from './expert-heightmap';
+import celShading from './cel-shading';
 
 const examples: Record<
   string,
@@ -19,6 +20,7 @@ const examples: Record<
   'basic-heightmap': basicHeightmap,
   'advanced-heightmap': advancedHeightmap,
   'expert-heightmap': expertHeightmap,
+  'cel-shading': celShading,
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
