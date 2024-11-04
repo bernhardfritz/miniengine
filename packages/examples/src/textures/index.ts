@@ -55,8 +55,7 @@ export default async function (gl: WebGL2RenderingContext) {
     u_worldViewProjection: mat4(1).flat(),
   };
 
-  return (deltaTime: number) => {
-    deltaTime *= 0.0001;
+  return (_deltaTime: number) => {
     resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
@@ -77,7 +76,7 @@ export default async function (gl: WebGL2RenderingContext) {
 
     const view = lookAt(eye, target, up);
     const viewProjection = multiply(projection, view);
-    const world = rotate(mat4(1), deltaTime, vec3(0, 1, 0));
+    const world = rotate(mat4(1), document.timeline.currentTime as number * 0.0001, vec3(0, 1, 0));
 
     Object.assign(uniforms, {
       u_viewInverse: inverse(view).flat(),

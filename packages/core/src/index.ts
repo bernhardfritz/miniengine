@@ -23,8 +23,10 @@ export async function render(
     throw new Error('Error creating WebGL2 context.');
   }
   const callback = await app(gl);
-  const frameRequestCallback: FrameRequestCallback = (deltaTime) => {
-    callback(deltaTime);
+  let previousTime = performance.now();
+  const frameRequestCallback: FrameRequestCallback = (time) => {
+    callback(time - previousTime);
+    previousTime = time;
     requestAnimationFrame(frameRequestCallback);
   };
   requestAnimationFrame(frameRequestCallback);
