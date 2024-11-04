@@ -1,0 +1,15 @@
+diff --git a/src/pkg.js b/src/pkg.js
+index 75a60cbebe5c1aff4fc6647c0c89550305aa81d2..8b7359fa6986f9806966acfcdd8ea49be12b5526 100644
+--- a/src/pkg.js
++++ b/src/pkg.js
+@@ -78,6 +78,10 @@ function writePackageManifest(workingDir, pkg) {
+     var indent = pkg.__Indent;
+     delete pkg.__Indent;
+     var packagePath = path_1.join(workingDir, 'package.json');
++    if ('publishConfig' in pkg) {
++        Object.assign(pkg, pkg.publishConfig);
++        delete pkg.publishConfig;
++    }
+     try {
+         fs.writeFileSync(packagePath, JSON.stringify(pkg, null, indent) + '\n');
+     }

@@ -4,10 +4,21 @@
   "version": "0.0.0",
   "scripts": {
     "test": "vitest",
-    "doc": "typedoc"
+    "doc": "typedoc",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint"
   },
   "devDependencies": {
     "typedoc": "^0.26.7",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "yalc": "1.0.0-pre.53"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "yalc": "patches/yalc.patch"
+    }
   }
 }
