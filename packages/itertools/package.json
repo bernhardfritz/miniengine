@@ -1,11 +1,16 @@
 {
   "name": "@miniengine/itertools",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "exports": "./src/index.ts",
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "types": "./dist/types/index.d.ts"
+  },
   "scripts": {
-    "build": "tsc"
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js && tsc --emitDeclarationOnly --declaration --outDir dist/types",
+    "lint": "tsc --noEmit",
+    "yalc-publish": "yalc publish"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
